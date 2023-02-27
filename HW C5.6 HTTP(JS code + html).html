@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Work 5.6 HTTP</title>
+</head>
+<body>
+<Tbody>
+<form action="">
+    <input class="get_number_1" type="text" placeholder="Введите ширину:" required="">
+    <input class="get_number_2" type="text" placeholder="Введите высоту:" required="">
+    <button class="btn" type="button">Отправить</button>
+    <button class="reload" onClick="window.location.reload()">Обновить страницу</button>
+    <div class="result"></div>
+</form>
+</Tbody>
+<script>
+    const btn = document.querySelector('.btn');
+
+    btn.addEventListener('click', () => {
+        const valueInput_1 = document.querySelector('.get_number_1').value;
+        const valueInput_2 = document.querySelector('.get_number_2').value;
+
+        const number_1 = Number(valueInput_1);
+        const number_2 = Number(valueInput_2);
+
+        if((100<= number_1 && number_1 <=300) && (100<= number_2 && number_2 <=300))
+        {
+            fetch(`https://picsum.photos/${number_1}/${number_2}`)
+                .then(data => {
+                    console.log(data);
+                    const result = data.url;
+                    console.log(result);
+                    document.querySelector('.result').innerHTML = `
+        <div>
+          <p>Полученное фото:</p>
+            <img src="${result}">
+        </div`
+                })
+        }
+        else {
+            document.querySelector('.result').innerHTML = 'Неверный диапозон числа. Введите число в диапозоне от 100 до 300';
+            if(isNaN(number_1 || number_2)) {
+                document.querySelector('.result').innerHTML = 'Введите число от 100 до 300';
+            }
+        }
+    })
+</script>
+</body>
+</html>
